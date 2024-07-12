@@ -1,30 +1,22 @@
 <img align="right" width="250" height="47" src="/Material/images/Gematik_Logo_Flag.svg"/> <br/> 
 
-# UNDER CONSTRUCTION
 # API-Lagebild
 
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-       <ul>
-        <li><a href="#release-notes">Release Notes</a></li>
-      </ul>
-	</li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
+The webservice provides the corresponding data from the TI-Status database throught a REST interface.
+The GitHub Repository at hand depicts the existing access-routes as well as the delivered data format.
+
+The [doucmentation](content/Documentation.md) is available in **German only**.
+
+Die **ausschließlich auf Deutsch** zur Verfügung stehende **[Dokumentation](content/Documentation.md)** findet sich im Content folder.
 
 ## About The Project
 
-For full information and details, see [TI-Status](https://simplifier.net/isik-basis-v4).
+For full information and details, see [TI-Status](https://fachportal.gematik.de/ti-status).
 
 You may find the Live Status here: [Lagebild der TI-Anwendungen](https://ti-lage.prod.ccs.gematik.solutions/d/b1caa311-6ee5-4ec3-b3ce-1297fac04773/lagebild-der-ti-anwendungen?orgId=1&kiosk&refresh=5m).
 
 ### Release Notes
-See [ReleaseNotes.md](/ReleaseNotes.md) for all information regarding (newest) releases and changes.
+See [ReleaseNotes.md](content/ReleaseNotes.md) for all information regarding (newest) releases and changes.
 
 ## License
  
