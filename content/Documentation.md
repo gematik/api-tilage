@@ -2,7 +2,8 @@
 
 **Inhaltsverzeichnis**
 - [1. Beschreibung](#1-beschreibung)
-  - [1.1. Versionen](#11-versionen)
+  - [](#)
+  - [1.2. Versionen](#12-versionen)
 - [2. Basis URLs](#2-basis-urls)
 - [3. TI Lagebild Version 1](#3-ti-lagebild-version-1)
   - [3.1. Abruf der Gesamtliste](#31-abruf-der-gesamtliste)
@@ -15,10 +16,6 @@
   - [4.1. Detailbeschreibung "appStatus"](#41-detailbeschreibung-appstatus)
   - [4.2. Detailbeschreibung "cause"](#42-detailbeschreibung-cause)
   - [4.3. Gesamtbeispiel](#43-gesamtbeispiel)
-- [5. TI Kennzahlen](#5-ti-kennzahlen)
-  - [5.1. Aktueller Wert einer spezifischen Kennzahl](#51-aktueller-wert-einer-spezifischen-kennzahl)
-  - [5.2. chronologische Werte einer spezifischen Kennzahl](#52-chronologische-werte-einer-spezifischen-kennzahl)
-  - [5.3. Historischer Werte einer spezifischen Kennzahl](#53-historischer-werte-einer-spezifischen-kennzahl)
 
 
 ## 1. Beschreibung
@@ -26,15 +23,23 @@
 Der Webservice liefert die in der TI-Lagebild (Online Datenbank) abgelegten Informationen über eine technische Schnittstelle aus. Im weiteren werden die bestehenden Routen sowie das Auslieferungsformat beschrieben.
 
 - Das Lagebild stellt die aktuelle Sichtweise der gematik auf die TI Infrastruktur dar – welche durch das Probing ermittelt wird.
-- Aktualisierung der Daten im 5 Minuten Rhythmus
+- Die Aktualisierung der Daten erfolgt im 5 Minuten Rhythmus
   - Probing findet jeweils xx:x0 bzw. xx:x5 statt, also 01:00, 01:05, 01:10 Uhr usw. statt
-  - Aktualisierung der Daten wird jeweils unmittelbar nach Abschluss eines Probing Intervalls vorgenommen
+  - Die Aktualisierung der Daten wird entsprechend unmittelbar nach Abschluss eines Probing Intervalls vorgenommen
+  - Aufgrund diesen Aktualisierungsrhythmus sollte auch eine **automatisierte zyklische Abfrage nur höchstens alle 5 Minuten** erfolgen.
+  - Es wird empfohlen eine automatisierte Abfrage mit einem leichten Versatz zur Aktualisierung der Daten und nicht zeitgleich durchzuführen. Z.B. eine Minute danach xx:x1, also 01:01, 01:06, 01:11 Uhr usw.
 - REST-Schnittstelle liefert den gleichen Datenbestand welcher in der grafischen Oberfläche abrufbar ist
 - Ziele der Schnittstelle
   - Anreicherung des Monitorings der eigenen Infrastruktur
-  - autom. Abruf der Daten & Zugreifbarkeit der Informationen ermöglichen
+  - Automatischen Abruf der Daten & Zugreifbarkeit der Informationen ermöglichen
 
-### 1.1. Versionen
+**Hinweis**
+
+Die gematik behält nicht vor Nutzer mit einem unverhältnismäßig hohen Ressourcenbedarf (z.B. sekündliche Abfrage) oder solche, die sicherheitsverschleiernde Methoden (z.B. IP-Cycler) einsetzen ohne Verzug von der Nutzung der Schnittstelle auzuschließen.
+
+###
+
+### 1.2. Versionen
 Es gibt mittlerweile 2 Versionen mit unterschiedlichen Sichtweisen auf das TI-Lagebild. 
 
 Version 1:
@@ -282,62 +287,4 @@ Ergebnis und Inhalt
     }
   ]
 }
-```
-
-
-## 5. TI Kennzahlen
-Kennzahlen werden immer in Form eines Wertes zu einem konkreten Erhebungszeitpukt bereitgestellt. Jede Kennzahl ist durch eine eindeute Kennzahl-Id identifiziert, dies muss für den Abruf entsprechend angegeben werden.
-
-### 5.1. Aktueller Wert einer spezifischen Kennzahl
-Abruf via
-```
-https://[URL]/lageapi/v1/kpi/[:kpiId]/date/latest
-```
-
-Liefert den aktuellsten Wert der Kennzahl und damit genau ein JSON Objekt.
-```json
-{
-  "kpiId":1000,
-  "value":"121152",
-  "utcTime":"2022-08-03T22:10:04.123Z"
-}
-```
-
-### 5.2. chronologische Werte einer spezifischen Kennzahl
-```
-https://[URL]/lageapi/v1/kpi/[:kpiId]
-```
-Liefert alle Wert einer Kennzahl als Liste aus.
-```json
-[
-  {
-    "kpiId":1000,
-    "value":"121152",
-    "utcTime":"2022-08-03T22:10:04.123Z"
-  }, 
-  {
-    "kpiId":1000,
-    "value":"118286",
-    "utcTime":"2022-08-02T22:10:02.693Z"
-  },
-  ...
-]
-```
-
-### 5.3. Historischer Werte einer spezifischen Kennzahl
-```
-https://[URL]/lageapi/v1/kpi/[:kpiId]/date/[:date]
-```
-Kann verwendet werden um die Kennzahlwerte eines konkreten Tages abzurufen. Der Wert [:date] muss dabei im Format "yyyy-mm-dd" geliefert werden.
-
-Liefert alle Wert einer Kennzahl als Liste aus.
-```json
-[
-  {
-    "kpiId":1000,
-    "value":"121152",
-    "utcTime":"2022-08-03T22:10:04.123Z"
-  },
-  ...
-]
 ```
