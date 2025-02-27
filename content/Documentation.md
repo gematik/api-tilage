@@ -11,7 +11,7 @@
   - [3.2. Weitere Routen](#32-weitere-routen)
     - [3.2.1. Betriebsumgebung](#321-betriebsumgebung)
     - [3.2.2. Configuration Item](#322-configuration-item)
-    - [3.2.3. Telematik ID](#323-telematik-id)
+    - [3.2.3. Teilnehmer ID](#323-teilnehmer-id)
 - [4. TI Lagebild Version 2](#4-ti-lagebild-version-2)
   - [4.1. Detailbeschreibung "appStatus"](#41-detailbeschreibung-appstatus)
   - [4.2. Detailbeschreibung "cause"](#42-detailbeschreibung-cause)
@@ -140,8 +140,8 @@ GET https://ti-lage.prod.ccs.gematik.solutions/lageapi/v1/tilage/ci/CI-0000001
 ```
 
 
-#### 3.2.3. Telematik ID
-Filterung bzw. Abruf auf konkrete TID
+#### 3.2.3. Teilnehmer ID
+Filterung bzw. Abruf auf die konkrete Teilnehmer ID
 ```
 https://[URL]/lageapi/v1/tilage/tid/[:tid]
 ```
