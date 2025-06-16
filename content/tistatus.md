@@ -10,12 +10,12 @@
 
 ## 1. Beschreibung
 
-Der Webservice liefert die in der TI-Lagebild (Online Datenbank) abgelegten Informationen über eine technische Schnittstelle aus. Im weiteren werden die bestehenden Routen sowie das Auslieferungsformat beschrieben.
+Der Webservice liefert die in der TI-Lagebild (Online Datenbank) abgelegten Informationen über eine technische Schnittstelle aus. Im Weiteren werden die bestehenden Routen sowie das Auslieferungsformat beschrieben.
 
 - der TI-Status beinhaltet zwei maßgebliche Daten Objekte
   - pot. Einschränkungen
   - pot. Ursachen
-- "pot. Einschränkungen" bilden eine Funktionseinschränkung von relavante TI-Anwendungen ab. Eine pot. Einschränkung selbst besteht aus einem Status, zugeordneten TI-Anwendungen und Statusschritten, welche wiederunm die Veränderung der Einschränkung zeitlich darstellen. Ein Statusschritt wiederum beinhaltet daher einen Zeitpunkt, einen Status welcher zu diesem Zeitpunkt vorlag und eine textuelle Beschreibung. 
+- "pot. Einschränkungen" bilden eine Funktionseinschränkung von relevanten TI-Anwendungen ab. Eine pot. Einschränkung selbst besteht aus einem Status, zugeordneten TI-Anwendungen und Statusschritten, welche wiederum die Veränderung der Einschränkung zeitlich darstellen. Ein Statusschritt wiederum beinhaltet daher einen Zeitpunkt, einen Status welcher zu diesem Zeitpunkt vorlag und eine textuelle Beschreibung. 
 - "pot. Ursachen" beinhalten beeinträchtigte Komponenten welche im Probing der gematik erkannt wurden. 
 
 
@@ -29,7 +29,7 @@ Abrufbar unter folgendem Pfad:
 https://ti-lage.prod.ccs.gematik.solutions/lageapi/v1/tistatus/incident
 ```
 
-Der Abruf erfolgt in Form einer REST-API, im Ergebnis wird somit JSON geliefert. Das Ergebnis beinhaltet bei einem erfolgreichen Abruf immer folgende Strutkur: 
+Der Abruf erfolgt in Form einer REST-API, im Ergebnis wird somit JSON geliefert. Das Ergebnis beinhaltet bei einem erfolgreichen Abruf immer folgende Struktur: 
 ```json
 {
   "success": true,
@@ -39,7 +39,7 @@ Der Abruf erfolgt in Form einer REST-API, im Ergebnis wird somit JSON geliefert.
 }
 ```
 Die Ergebnisliste umfasst: 
-* pot. Einschränkungen der letzt 14 Tage
+* pot. Einschränkungen der letzten 14 Tage
 * alle Statusschritte der pot. Einschränkungen 
 
 
@@ -100,8 +100,8 @@ Die Bedeutung der einzelnen Objekte kann der nachfolgenden Beschreibung entnomme
 
 | Attribut  | Beschreibung |
 | ------------- | ------------- |
-| 1  | (rot) es wurde ein Komplettausfall der TI-Anwendung(en) festgestellt, die textuelle Beschreibung beinhhaltet dabei Details zu den betroffenen Anwendungsszenarien |
-| 4  | (gelb) es wurde ein Teilausfall der TI-Anwendung(en) festgestellt, die textuelle Beschreibung beinhhaltet dabei Details zu den betroffenen Anwendungsszenarien, es wird vsl. möglich sein die weiteren Funktionen der Anwendung zu nutzen |
+| 1  | (rot) es wurde ein Komplettausfall der TI-Anwendung(en) festgestellt, die textuelle Beschreibung beinhaltet dabei Details zu den betroffenen Anwendungsszenarien |
+| 4  | (gelb) es wurde ein Teilausfall der TI-Anwendung(en) festgestellt, die textuelle Beschreibung beinhaltet dabei Details zu den betroffenen Anwendungsszenarien, es wird vsl. möglich sein die Weiteren Funktionen der Anwendung zu nutzen |
 | 2  | (hellblau) das erste 5 Minuten Prüfintervall war erfolgreich |
 | 3  | (grün) zwei aufeinander folgende Prüfintervalle waren erfolgreich, sobald dieser Status erreicht wird, wird die pot. Einschränkung abgeschlossen |
 
@@ -118,7 +118,7 @@ Abrufbar unter folgendem Pfad:
 https://ti-lage.prod.ccs.gematik.solutions/lageapi/v1/tistatus/outage
 ```
 
-Der Abruf erfolgt in Form einer REST-API, im Ergebnis wird somit JSON geliefert. Das Ergebnis beinhaltet bei einem erfolgreichen Abruf immer folgende Strutkur: 
+Der Abruf erfolgt in Form einer REST-API, im Ergebnis wird somit JSON geliefert. Das Ergebnis beinhaltet bei einem erfolgreichen Abruf immer folgende Struktur: 
 ```json
 {
   "success": true,
@@ -136,8 +136,8 @@ Die Bedeutung der einzelnen Objekte kann der nachfolgenden Beschreibung entnomme
   "success": true,
   "data": [
     {
-      "ci": "CI-0000425",
-      "provider": "BITMARCK ",
+      "ci": "CI-1111111",
+      "provider": "Anbieter XY",
       "service": "ePA",
       "slots": [
         {
@@ -148,8 +148,8 @@ Die Bedeutung der einzelnen Objekte kann der nachfolgenden Beschreibung entnomme
       ]
     },
     {
-      "ci": "CI-0000853",
-      "provider": "Bundesnotarkammer",
+      "ci": "CI-1111112",
+      "provider": "Anbieter ABC",
       "service": "WANDA Basic",
       "slots": [
         {
