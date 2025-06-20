@@ -326,19 +326,19 @@ Ergebnis und Inhalt
     "prodTypeName": "TSP-X.509nQ-SMC-B",
     "cis": [
       {
-        "ci": "CI-1111111",
+        "ci": "CI-0000019",
         "orgShortName": "Anbieter A"
       },
       {
-        "ci": "CI-1111121",
+        "ci": "CI-0000137",
         "orgShortName": "Anbieter B"
       },
       {
-        "ci": "CI-1111211",
+        "ci": "CI-0000186",
         "orgShortName": "Anbieter C"
       },
       {
-        "ci": "CI-1111151",
+        "ci": "CI-0000192",
         "orgShortName": "Anbieter D"
       }
     ]
@@ -373,23 +373,23 @@ Der Abruf des parametriesierten Lagebildes erfolgt über die gleiche Basis URL u
 
 **Beispiel 1:**
 
-Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-9999999 betreffen. 
+Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-0000200 betreffen. 
 ```
-https://ti-lage.dev.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-9999999
+https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-0000200
 ```
 
 **Beispiel 2:**
 
-Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM und TI-Anschluss betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-9999999 und für TI-Anschluss den Abieter mit CI-Id CI-8888888 betreffen. 
+Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM und TI-Anschluss betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-0000200 und für TI-Anschluss den Abieter mit CI-Id CI-0000128 betreffen. 
 ```
-https://ti-lage.dev.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-9999999&ciAccess=CI-8888888
+https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-0000200&ciAccess=CI-0000128
 ```
 
 **Beispiel 3:** 
 
-Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM, TI-Anschluss und TSP SMC-B betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-9999999, für TI-Anschluss den Abieter mit CI-Id CI-8888888 und für TSP SMC-B den Anbieter mit CI-Id CI-1111111 betreffen. 
+Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM, TI-Anschluss und TSP SMC-B betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-0000200, für TI-Anschluss den Abieter mit CI-Id CI-0000128 und für TSP SMC-B den Anbieter mit CI-Id CI-0000019 betreffen. 
 ```
-https://ti-lage.dev.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-9999999&ciAccess=CI-8888888&ciTspSmcb=CI-1111111
+https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-0000200&ciAccess=CI-0000128&ciTspSmcb=CI-0000019
 ```
 
 Je Filterparameter kann eine CI angegeben werden. Die Filterparameter untereinander sind frei kombinierbar. 
@@ -400,4 +400,4 @@ Beispiel wie die Filterliste genutzt werden kann um eine Abruf-URL zusammenzuset
 | Beispiel  | Direktlink | Beschreibung |
 | ------------- | ------------- | ------------- |
 | URL-Builder  | [Link](/example/tilage-v2/urlbuilder.html)  | Die HTML Datei kann als lokal gespeicherte Datei im Browser geöffnet werden. Über die TI-Lage V2 API wird die Liste der vorhanden Filtergruppen und zugehörigen logischen Produktinstanzen abgerufen. Je Filtergruppe kann nun ein Anbieter - und damit dessen logische Produktinstanz - gewählt werden. Die die parametrierung der URL wird automatisch angepasst. |
-| TI-Lage V2 Abruf  | [Link](/example/tilage-v2/lagebild_v2.html)  | Die HTML Datei kann als lokal gespeicherte Datei im Browser geöffnet werden. Initial wird das aktuelle Lagebild ohne einschränkungen über Parameter dargestellt. Die URL Query Parameter welche mit Hilfe des URL Builder generiert wurden können als weitere Parameter angefügt werden um das parametrierte Lagebild V2 zu laden. Wenn die HTML Datei lokal z.b. im Verzeichnis `C:\temp\lagebild_v2.html` gespeichert haben, wird dies in der URL Leiste des Browsers ebenso dargestellt. Die Parameter können nun in der URL-Leiste wie hier zu sehen angehangen werden: `C:\temp\lagebild_v2.html?ciKim=CI-9999999&ciAccess=CI-8888888`. |
+| TI-Lage V2 Abruf  | [Link](/example/tilage-v2/lagebild_v2.html)  | Die HTML Datei kann als lokal gespeicherte Datei im Browser geöffnet werden. Initial wird das aktuelle Lagebild ohne einschränkungen über Parameter dargestellt. Die URL Query Parameter welche mit Hilfe des URL Builder generiert wurden können als weitere Parameter angefügt werden um das parametrierte Lagebild V2 zu laden. Wenn die HTML Datei lokal z.b. im Verzeichnis `C:\temp\lagebild_v2.html` gespeichert haben, wird dies in der URL Leiste des Browsers ebenso dargestellt. Die Parameter können nun in der URL-Leiste wie hier zu sehen angehangen werden: `C:\temp\lagebild_v2.html?ciKim=CI-0000200&ciAccess=CI-0000128`. |
