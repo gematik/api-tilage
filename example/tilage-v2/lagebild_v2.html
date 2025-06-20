@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- Dieser code wurde mit Hilfe einer KI erstellt -->
+<head>
+  <meta charset="UTF-8">
+  <title>TI-Lagebild</title>
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+      margin: 2em;
+    }
+    .outage-partial {
+      color: orange;
+    }
+    .outage-total {
+      color: red;
+    }
+    .funcs {
+      margin: 0.4em 0 1em 1.5em;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <h2>TI-Lagebild</h2>
+  <div id="erg"></div>
+
+  <script>
+    // 1. Basis-URL der API
+    const baseUrl = 'https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage';
+
+    // 2. Parameter aus der URL lesen
+    const params = new URLSearchParams(location.search);
+    const allowedParams = ['ciAccess', 'ciTspSmcb', 'ciTspHba', 'ciKim'];
+    let queryParts = [];
+
+    allowedParams.forEach(param => {
+      const value = params.get(param);
+      if (value) {
+        queryParts.push(`${param}=${encodeURIComponent(value)}`);
+      }
+    });
+
+    // 3. API-URL zusammenbauen
+    const apiUrl = queryParts.length ? `${baseUrl}?${queryParts.join('&')}` : baseUrl;
+
+    // 4. Element für die Ausgabe im DOM holen
+    const outputDiv = document.getElementById('erg');
+
+    // 5. API abrufen und Ergebnis verarbeiten
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        let html = "";
+
+        // 5a. Aktuelle Störungen anzeigen
+        html += "<h3>Aktuelle Störungen</h3>";
+        if (Array.isArray(data.cause) && data.cause.length) {
+          html += "<ul>";
+          data.cause.forEach(cause => {
+            if (typeof cause === "object") {
+              html += `<li>${Object.values(cause).join(" | ")}</li>`;
+            } else {
+              html += `<li>${cause}</li>`;
+            }
+          });
+          html += "</ul>";
+        } else {
+          html += "<div>Keine Störungen bekannt.</div>";
+        }
+
+        // 5b. Auswirkungen anzeigen
+        html += "<h3>Auswirkungen</h3>";
+        let hasOutage = false;
+        if (data.appStatus) {
+          for (const [appName, appInfo] of Object.entries(data.appStatus)) {
+            if (appInfo.outage && appInfo.outage !== "none") {
+              hasOutage = true;
+              const outageClass = appInfo.outage === "partial" ? "outage-partial" : "outage-total";
+              html += `
+                <div>
+                  <b>${appName}:</b>
+                  <span class="${outageClass}">${appInfo.outage}</span>
+              `;
+              if (Array.isArray(appInfo.affectedFunctions) && appInfo.affectedFunctions.length) {
+                html += `
+                  <div class="funcs">
+                    <u>Betroffene Funktionen:</u>
+                    <ul>
+                      ${appInfo.affectedFunctions.map(func =>
+                        `<li>${func.impactDesc || "-"}</li>`
+                      ).join("")}
+                    </ul>
+                  </div>
+                `;
+              }
+              html += "</div>";
+            }
+          }
+        }
+        if (!hasOutage) {
+          html += "<div>Keine aktuellen Auswirkungen.</div>";
+        }
+
+        // 6. Ergebnis im HTML ausgeben
+        outputDiv.innerHTML = html;
+      })
+      .catch(error => {
+        // 7. Fehlerbehandlung: Fehlermeldung anzeigen
+        outputDiv.textContent = "Fehler: " + error.message;
+      });
+  </script>
+</body>
+</html>
