@@ -29,7 +29,7 @@ Der Webservice liefert die in der TI-Lagebild (Online Datenbank) abgelegten Info
 - Die Aktualisierung der Daten erfolgt im 5 Minuten Rhythmus
   - Probing findet jeweils xx:x0 bzw. xx:x5 statt, also 01:00, 01:05, 01:10 Uhr usw. statt
   - Die Aktualisierung der Daten wird entsprechend unmittelbar nach Abschluss eines Probing Intervalls vorgenommen
-  - Aufgrund diesen Aktualisierungsrhythmus sollte auch eine **automatisierte zyklische Abfrage nur höchstens alle 5 Minuten** erfolgen.
+  - Aufgrund dieses Aktualisierungsrhythmus sollte auch eine **automatisierte zyklische Abfrage nur höchstens alle 5 Minuten** erfolgen.
   - Es wird empfohlen eine automatisierte Abfrage mit einem leichten Versatz zur Aktualisierung der Daten und nicht zeitgleich durchzuführen. Z.B. eine Minute danach xx:x1, also 01:01, 01:06, 01:11 Uhr usw.
 - REST-Schnittstelle liefert den gleichen Datenbestand welcher in der grafischen Oberfläche abrufbar ist
 - Ziele der Schnittstelle
@@ -119,7 +119,7 @@ Ergebnis und Inhalt
 
 ### 3.2. Weitere Routen
 
-Für den gezielteren Abruf sind weitere Routen vorhanden, welche jeweils eine Filterung der Gesamtliste bewirken. Achtung die Werte des Abrufs sind jeweils in Großbuchstaben zu übergeben.
+Für den gezielteren Abruf sind weitere Routen vorhanden, welche jeweils eine Filterung der Gesamtliste bewirken. Achtung, die Werte des Abrufs sind jeweils in Großbuchstaben zu übergeben.
 
 #### 3.2.1. Betriebsumgebung
 Filterung bzw. Abruf nach Betriebsumgebung, hier kann "PU", "RU" oder "TU" angegeben werden.
@@ -155,7 +155,7 @@ GET https://ti-lage.prod.ccs.gematik.solutions/lageapi/v1/tilage/tid/ARVTO
 
 ## 4. TI Lagebild Version 2
 
-Die informationen für das Lagebild in Version 2 sind bereits verdichtet und werden zusammengefasst in einem JSON-Objekt ausgeliefert. Innerhalb der JSON-Struktur sind statische und dynamische Elemente vorhanden. Die statischen Attribute "epa", "erezept", "kim", "odg", "vsdm" und "wanda" spiegeln die in der Service Map vorhanden Gruppen wieder. Konsumenten welche sich nur für entsprechende Gruppen interessieren, können die Verarbeitungslogik des JSON daraufhin anpassen. 
+Die Informationen für das Lagebild in Version 2 sind bereits verdichtet und werden zusammengefasst in einem JSON-Objekt ausgeliefert. Innerhalb der JSON-Struktur sind statische und dynamische Elemente vorhanden. Die statischen Attribute "epa", "erezept", "kim", "odg", "vsdm" und "wanda" spiegeln die in der Service Map vorhanden Gruppen wieder. Konsumenten welche sich nur für entsprechende Gruppen interessieren, können die Verarbeitungslogik des JSON daraufhin anpassen. 
 
 Der Pfad für den Abruf
 ```
@@ -302,7 +302,7 @@ Ergebnis und Inhalt
 
 ### 4.4. parametrierter Abruf des Lagebildes V2
 
-Das Lagebild in Version 2 stellt Einschränkungen für alle in der TI verwendeten Komponenten dar. Einige der Komponenten werden durch unterschiedliche Anbieter in getrennten Systemumgebungen bereitgestellt, daher haben Einschränkungen nicht immer eine tatsächliche Auswirkungen bei allen Leistungserbringern - eine Einschränkung des KIM Fachdienstes bei Anbieter A hat z.b. keine Auswirkung wenn der Dienst von Anbieter B verwendet wird. 
+Das Lagebild in Version 2 stellt Einschränkungen für alle in der TI verwendeten Dienste dar. Einschränkungen verstehen sich hier als Beeinträchtigung in der vollständigen Nutzung eines Dienstes, es sich z.B. Teilkomponenten wie der "Empfang von E-Mails" gestört. Einige der Dienste werden durch unterschiedliche Anbieter in getrennten Systemumgebungen bereitgestellt, daher haben Einschränkungen nicht immer eine tatsächliche Auswirkungen bei allen Leistungserbringern - eine Einschränkung des KIM Fachdienstes bei Anbieter A hat z.b. keine Auswirkung wenn der Dienst von Anbieter B verwendet wird. 
 Um die genutzten Systeme des Leistungserbringers für den parametrierten Abruf nutzen zu können, stehen folgende Endpunkte zur Verfügung: 
 * Abruf der Filterliste
 * Abruf des parametrierten Lagebildes
