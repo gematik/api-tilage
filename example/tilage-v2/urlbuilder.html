@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- Dieser code wurde mit Hilfe einer KI erstellt -->
+<head>
+  <meta charset="UTF-8">
+  <title>TI-Lagebild URL-Builder</title>
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+      margin: 2em;
+    }
+    .row {
+      margin-bottom: 1em;
+    }
+    #url {
+      margin-top: 2em;
+      display: block;
+      font-family: monospace;
+      background: #f8f8f8;
+      padding: 0.5em 1em;
+    }
+  </style>
+</head>
+<body>
+  <h2>TI-Lagebild URL-Builder</h2>
+  <!-- Formular für die dynamischen Filter -->
+  <form id="f"></form>
+  <!-- Hier wird die erzeugte URL angezeigt -->
+  <div id="url"></div>
+  <script>
+    // Datenstruktur für die Filteroptionen
+    let filterData = [];
+    // Mapping von Filtergruppen zu API-Parametern
+    const paramMap = {
+      "TI-Zugang": "ciAccess",
+      "TSP SMC-B": "ciTspSmcb",
+      "TSP HBA": "ciTspHba",
+      "KIM": "ciKim"
+    };
+
+    // 1. Filteroptionen von der API laden
+    fetch('https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage/filter')
+      .then(response => response.json())
+      .then(json => {
+        // 2. Filterdaten aufbereiten: Jede Kombination in ein Objekt schreiben
+        json.forEach(filterGroup =>
+          filterGroup.cis.forEach(ciObj =>
+            filterData.push({
+              group: filterGroup.filterGroup,
+              productType: filterGroup.prodTypeName,
+              ci: ciObj.ci,
+              org: ciObj.orgShortName + " (" + filterGroup.prodTypeName + ")"
+            })
+          )
+        );
+
+        // 3. Einzigartige Filtergruppen bestimmen (z.B. "TI-Zugang", "KIM", ...)
+        let uniqueGroups = [...new Set(filterData.map(x => x.group))];
+        const form = document.getElementById('f');
+
+        // 4. Für jede Filtergruppe ein Dropdown (select) erzeugen
+        uniqueGroups.forEach(group => {
+          // Alle Optionen dieser Gruppe filtern
+          let options = filterData.filter(x => x.group == group);
+          // select-Element erzeugen
+          let select = document.createElement('select');
+          // Standard-Option hinzufügen
+          select.innerHTML = '<option value="">wählen...</option>' +
+            options.map(opt =>
+              `<option value="${opt.ci}">${opt.org}</option>`
+            ).join('');
+          // Event-Handler für Änderungen
+          select.onchange = buildUrl;
+
+          // Zeile für das Formular anlegen
+          let row = document.createElement('div');
+          row.className = 'row';
+          row.innerHTML = `<label>${group}: </label>`;
+          row.appendChild(select);
+          form.appendChild(row);
+        });
+
+        // 5. Funktion zum Bauen der URL
+        function buildUrl() {
+          let params = [];
+          // Alle select-Elemente durchgehen
+          [...form.querySelectorAll('select')].forEach((select, i) => {
+            if (select.value) {
+              // Passenden Parameternamen aus paramMap holen
+              params.push(paramMap[uniqueGroups[i]] + '=' + encodeURIComponent(select.value));
+            }
+          });
+          // URL im Ausgabefeld anzeigen (nur wenn mindestens ein Filter gesetzt)
+          url.textContent = params.length
+            ? 'https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage?' + params.join('&')
+            : '';
+        }
+      });
+  </script>
+</body>
+</html>

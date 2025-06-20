@@ -15,8 +15,11 @@
   - [4.1. Detailbeschreibung "appStatus"](#41-detailbeschreibung-appstatus)
   - [4.2. Detailbeschreibung "cause"](#42-detailbeschreibung-cause)
   - [4.3. Gesamtbeispiel](#43-gesamtbeispiel)
+  - [4.4. parametrierter Abruf](#44-parametrierter-abruf-des-lagebildes-v2)
+    - [4.4.1 Abruf Filterliste](#441-abruf-filterliste)
+    - [4.4.2 Abruf des parametrierten Lagebildes](#442-abruf-des-parametrierten-lagebildes)
 
-
+  
 
 ## 1. Beschreibung
 
@@ -295,3 +298,106 @@ Ergebnis und Inhalt
   ]
 }
 ```
+
+
+### 4.4. parametrierter Abruf des Lagebildes V2
+
+Das Lagebild in Version 2 stellt Einschränkungen für alle in der TI verwendeten Komponenten dar. Einige der Komponenten werden durch unterschiedliche Anbieter in getrennten Systemumgebungen bereitgestellt, daher haben Einschränkungen nicht immer eine tatsächliche Auswirkungen bei allen Leistungserbringern - eine Einschränkung des KIM Fachdienstes bei Anbieter A hat z.b. keine Auswirkung wenn der Dienst von Anbieter B verwendet wird. 
+Um die genutzten Systeme des Leistungserbringers für den parametrierten Abruf nutzen zu können, stehen folgende Endpunkte zur Verfügung: 
+* Abruf der Filterliste
+* Abruf des parametrierten Lagebildes
+
+
+#### 4.4.1 Abruf Filterliste
+
+Die Filterliste bietet die aktuell zur Auswahl stehenden logischen Produktinstanzen an, welche als Filter verwendet werden können. Über die Filtergruppe kann eine Zuordnung zur den Filterparameter vorgenommen werden. 
+
+Der Pfad für den Abruf
+```
+https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage/filter
+```
+
+Ergebnis und Inhalt
+```json
+[
+  {
+    "filterGroup": "TSP SMC-B",
+    "pdt": "PDT38",
+    "prodTypeName": "TSP-X.509nQ-SMC-B",
+    "cis": [
+      {
+        "ci": "CI-1111111",
+        "orgShortName": "Anbieter A"
+      },
+      {
+        "ci": "CI-1111121",
+        "orgShortName": "Anbieter B"
+      },
+      {
+        "ci": "CI-1111211",
+        "orgShortName": "Anbieter C"
+      },
+      {
+        "ci": "CI-1111151",
+        "orgShortName": "Anbieter D"
+      }
+    ]
+  },
+  {...}
+]
+```
+
+| Attribut  | Beschreibung |
+| ------------- | ------------- |
+| filterGroup  | Zuordnung zu den Filterattributen, siehe nachfolgende Erläuterung  |
+| pdt  | Zuordnung zu den gematik Produkttypen  |
+| prodTypeName  | Name des Produkttyps |
+| cis  | Liste von wählbaren logischen Produktinstanzen  |
+| cis > ci  | CI-Id der logischen Produktinstanz  |
+| cis > orgShortName  | Name des Anbieters |
+
+
+Anhand der Filtergruppen lässt sich Zuordnung der Abfageparameter festlegen: 
+
+| Filtergruppe  | URL Filterparameter |
+| ------------- | ------------- |
+| TI-Zugang  | ciAccess  |
+| TSP SMC-B  | ciTspSmcb  |
+| TSP HBA  | ciTspHba  |
+| KIM  | ciKim  |
+
+
+#### 4.4.2 Abruf des parametrierten Lagebildes
+
+Der Abruf des parametriesierten Lagebildes erfolgt über die gleiche Basis URL und den gleichen Endpunkt. Die gewünschten URL Filterparameter aus der darüber stehenden Tabellen werden als Query Parameter an die URL angehangen und sind damit auch kombinierbar. 
+
+**Beispiel 1:**
+
+Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-9999999 betreffen. 
+```
+https://ti-lage.dev.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-9999999
+```
+
+**Beispiel 2:**
+
+Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM und TI-Anschluss betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-9999999 und für TI-Anschluss den Abieter mit CI-Id CI-8888888 betreffen. 
+```
+https://ti-lage.dev.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-9999999&ciAccess=CI-8888888
+```
+
+**Beispiel 3:** 
+
+Es werdem alle pot. Einschränkungen ausgegeben welche nicht KIM, TI-Anschluss und TSP SMC-B betreffen, für KIM nur Einschränkungen sofern diesen den Abieter mit CI-ID CI-9999999, für TI-Anschluss den Abieter mit CI-Id CI-8888888 und für TSP SMC-B den Anbieter mit CI-Id CI-1111111 betreffen. 
+```
+https://ti-lage.dev.ccs.gematik.solutions/lageapi/v2/tilage?ciKim=CI-9999999&ciAccess=CI-8888888&ciTspSmcb=CI-1111111
+```
+
+Je Filterparameter kann eine CI angegeben werden. Die Filterparameter untereinander sind frei kombinierbar. 
+
+
+Beispiel wie die Filterliste genutzt werden kann um eine Abruf-URL zusammenzusetzen, sowie der Abruf des aktuellen Lagebildes in parametrierter und nicht parametrteriter Form sind im Verzeichnis "[example](/example/tilage-v2/)" zu finden. 
+
+| Beispiel  | Direktlink | Beschreibung |
+| ------------- | ------------- | ------------- |
+| URL-Builder  | [Link](/example/tilage-v2/urlbuilder.html)  | Die HTML Datei kann als lokal gespeicherte Datei im Browser geöffnet werden. Über die TI-Lage V2 API wird die Liste der vorhanden Filtergruppen und zugehörigen logischen Produktinstanzen abgerufen. Je Filtergruppe kann nun ein Anbieter - und damit dessen logische Produktinstanz - gewählt werden. Die die parametrierung der URL wird automatisch angepasst. |
+| TI-Lage V2 Abruf  | [Link](/example/tilage-v2/lagebild_v2.html)  | Die HTML Datei kann als lokal gespeicherte Datei im Browser geöffnet werden. Initial wird das aktuelle Lagebild ohne einschränkungen über Parameter dargestellt. Die URL Query Parameter welche mit Hilfe des URL Builder generiert wurden können als weitere Parameter angefügt werden um das parametrierte Lagebild V2 zu laden. Wenn die HTML Datei lokal z.b. im Verzeichnis `C:\temp\lagebild_v2.html` gespeichert haben, wird dies in der URL Leiste des Browsers ebenso dargestellt. Die Parameter können nun in der URL-Leiste wie hier zu sehen angehangen werden: `C:\temp\lagebild_v2.html?ciKim=CI-9999999&ciAccess=CI-8888888`. |
