@@ -180,6 +180,7 @@ GET https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage
 Ergebnis und Inhalt
 ```json
 {
+  "timestamp": "2025-12-31T23:59:59.123Z", // gibt den Zeitpunkt der Berechnung des Status an
   "appStatus": {
     "erezept": {
       "outage": "none"|"partial"|"full", // gibt den Grad des Funtionseinschränkung an
@@ -217,6 +218,7 @@ GET https://ti-lage.prod.ccs.gematik.solutions/lageapi/v2/tilage
 Ergebnis und Inhalt
 ```json
 {
+  "timestamp": "2025-12-31T23:59:59.123Z",
   "appStatus": {...},
   "cause": [
     {
@@ -235,6 +237,7 @@ Ergebnis und Inhalt
 
 ```json
 {
+  "timestamp": "2025-12-31T23:59:59.123Z",
   "appStatus": {
     "erezept": {
       "outage": "partial",
