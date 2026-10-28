@@ -2,10 +2,10 @@
 
 # API-Lagebild
 
-The webservice provides the corresponding data from the TI-Status database throught a REST interface.
+The webservice provides the corresponding data from the TI-Status database through a REST interface.
 The GitHub Repository at hand depicts the existing access-routes as well as the delivered data format.
 
-The [doucmentation](content/Documentation.md) is available in **German only**.
+The [documentation](content/Documentation.md) is available in **German only**.
 
 Die **ausschließlich auf Deutsch** zur Verfügung stehende **[Dokumentation](content/Documentation.md)** findet sich im Content folder.
 
